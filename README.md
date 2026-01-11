@@ -37,3 +37,6 @@ Este projeto implementa um pequeno jogo de lógica apresentado dentro de uma tab
 - A mecânica de jogo básica de clique-a-clique facilita a substituição de incógnitas:
   - Clique na célula que você quer editar (primeiro clique).
   - Clique em outra célula para copiar o conteúdo dessa segunda célula para a primeira (segundo clique).
+ 
+ 
+ [tabela](tabela.bmp) 
