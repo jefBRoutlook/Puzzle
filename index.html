@@ -94,12 +94,12 @@ button:hover { background: #000; color: #fff; }
 
 
 <script>
-
 // script.js
 
     const ROWS = 10;
     const COLS = 13;
-    const signalColA = ['+','-','*','/'];
+    const signalColA = ['+','-'];
+    // const signalColA = ['+','-','*','/'];
     const signalColB = ['<','>','<=','=>'];
 
     // Matriz que representa a grade (inicializada com zeros)
@@ -114,18 +114,36 @@ button:hover { background: #000; color: #fff; }
 
     function randSignalB() { return signalColB[randInt(0, signalColB.length - 1)]; }
 
+    // Is ?
+    function isQuestion(el, le, dft) {
+      result = dft;
+      if (el != "?" && le !="?") { result = "?";}
+      return result;
+    }
+    function checkValue( posSinal, posZero, posDois, quatro)  {
+
+      /*          *********C O L U N A S********** 
+          | Sinal | Zero | Dois | quatro | Igual  |
+          |   +   |   ?  |  d   |      q |   q-d  |
+          |   -   |   ?  |  d   |      q |   q+d  |
+          |   +   |   z  |  ?   |      q |   q-z  |
+          |   -   |   z  |  ?   |      q |   q+z  |
+          |   *   |   z  |  ?   |      q |   q/z  |
+          |   *   |   ?  |  d   |      q |   q/d  |
+          |   /   |   ?  |  d   |      q |   q*d  |
+          |   /   |   z  |  ?   |      q |   q*z  |
+      */
+      return result;
+    }
+
     // Preenche a matriz com valores padrão conforme o layout do código original
     for (let i = 0; i < ROWS; i++) {
-      matrix[i][0]  = randInt(0, 9);
-      matrix[i][1]  = randSignalA();
-      matrix[i][2]  = randInt(0, 9);
+      matrix[i][0]  = randInt(4, 6);
+      matrix[i][2]  = randInt(1, 3);
       matrix[i][6]  = randInt(0, 9);
-      matrix[i][7]  = randSignalA();
       matrix[i][8]  = randInt(0, 9);
       matrix[i][10] = randInt(0, 9);
-      matrix[i][11] = randSignalA();
       matrix[i][12] = randInt(0, 9);
-
       // inserir 5 '?' em posições aleatórias da linha
       for (let k = 0; k < 5; k++) {
         let ccol;
@@ -135,10 +153,14 @@ button:hover { background: #000; color: #fff; }
         matrix[i][ccol] = '?';
       }
 
+      matrix[i][1]  = randSignalA();
       matrix[i][3]  = '=';
-      matrix[i][4]  = randInt(0, 9);
+
+      matrix[i][4]  = isQuestion( matrix[i][0], matrix[i][2], matrix[i][5]);
       matrix[i][5]  = '=';
+      matrix[i][7]  = randSignalA();
       matrix[i][9]  = randSignalB();
+      matrix[i][11] = randSignalA();
     }
 
     // Construção da tabela na página
@@ -166,20 +188,21 @@ button:hover { background: #000; color: #fff; }
     table.addEventListener('click', (e) => {
       const td = e.target.closest('td');
       lin = td.parentElement.rowIndex;
-      
+
       if (!td) return;
       if (!primeiraClique) {
         primeiraClique = td;
         td.classList.add('modo-inverso');
+        console.log( lin," - ", matrix[lin][4] );
       } else {
         const textoFonte = td.textContent;
         primeiraClique.textContent = textoFonte;
         resetEstado();
       }
     });
-  
 
 </script>
 </body>
 </html>
+
 
